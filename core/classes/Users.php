@@ -19,7 +19,11 @@
 				$stmt->execute();
 				return $stmt->fetch(PDO::FETCH_OBJ);
 			}
-		
         }
+
+        public function emailExist($email){
+			$email = $this->get('users', array('email' => $email));
+			return ((!empty($email))) ? $email : false;
+		}
     }
 ?>

@@ -10,7 +10,11 @@
 			if(!Validate::filterEmail($email)){
 				$error = "Invaild email";
 			}else{
-				
+				if($user = $userObj->emailExist($email)){
+					$hash = $user->password;
+				}else{
+					$error = "No account with that email exists";
+				}
 			}
 		}
 	}
