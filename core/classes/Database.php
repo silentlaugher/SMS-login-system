@@ -1,13 +1,24 @@
 <?php 
     class Database{
-        protected $pdo;
-
-        protected function __construct(){
+        protected  $pdo;
+        protected static $instance;
+      
+        protected function __construct() {
             try{
-                $this->pdo = new PDO('mysql:host='.DB_HOST.';dbname='.DB_NAME.';', DB_USER, DB_PASS);
+                $dsn = 'mysql:host='.DB_HOST.';dbname='.DB_NAME.'';
+                $this->pdo = new PDO($dsn, DB_USER, DB_PASS);
             }catch(PDOEXception $e){
                 echo $e->getMessage();
             }
         }
+    
+        public static function instance(){
+            if(self::$instance === null){
+                self::$instance = new self;
+            }
+    
+            return self::$instance;
+        }
+    
     }
-?>
+    ?>
