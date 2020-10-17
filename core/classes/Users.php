@@ -28,6 +28,10 @@
         
         public function hash($password){
 			return password_hash($password, PASSWORD_BCRYPT);
+        }
+        
+        public function redirect($location){
+			header("Location: ".BASE_URL.$location);
 		}
     }
 ?>

@@ -1,30 +1,31 @@
-<?php 
-	include 'core/init.php';
-	if(isset($_POST['login'])){
-		$email = Validate::escape($_POST['email']);
-		$password = Validate::escape($_POST['password']);
-		
-		if(empty($email) or empty($password)){
-			$error = "Enter your email and password to login!";
-		}else {
-			if(!Validate::filterEmail($email)){
-				$error = "Invaild email";
-			}else{
-				if($user = $userObj->emailExist($email)){
-					$hash = $user->password;
-					if(password_verify($password, $hash)){
-						//login
-						echo 'login';
-				}else{
-					$error = "No account with that email exists";
-				}
+<?php
+ include 'core/init.php';
+  if(isset($_POST['login'])){
+ 	$email    = Validate::escape($_POST['email']);
+ 	$password = Validate::escape($_POST['password']);
 
-				}else{
-					$error = "Email or Password is incorrect!";
-				}
-			}
-		}
-	}
+ 	if(empty($email) or empty($password)){
+ 		$error = "Enter your email and password to login!";
+ 	}else {
+ 		if(!Validate::filterEmail($email)){
+ 			$error = "Invaild email";
+ 		}else{
+ 			if($user = $userObj->emailExist($email)){
+				 $hash = $user->password;
+ 				if(password_verify($password, $hash)){
+ 					//login
+ 					$_SESSION['user_id'] = $user->user_id;
+ 					$userObj->redirect('home.php');
+ 				}else{
+ 					$error = "Email or Password is incorrect!";
+ 				}
+  			}else{
+ 				$error = "No account with that email exists";
+ 			}
+ 		}
+ 	}
+ }
+ 
 ?>
 
 <!DOCTYPE html>
