@@ -24,6 +24,10 @@
         public function emailExist($email){
 			$email = $this->get('users', array('email' => $email));
 			return ((!empty($email))) ? $email : false;
+        }
+        
+        public function hash($password){
+			return password_hash($password, PASSWORD_BCRYPT);
 		}
     }
 ?>

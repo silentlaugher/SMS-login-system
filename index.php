@@ -12,8 +12,15 @@
 			}else{
 				if($user = $userObj->emailExist($email)){
 					$hash = $user->password;
+					if(password_verify($password, $hash)){
+						//login
+						echo 'login';
 				}else{
 					$error = "No account with that email exists";
+				}
+
+				}else{
+					$error = "Email or Password is incorrect!";
 				}
 			}
 		}
