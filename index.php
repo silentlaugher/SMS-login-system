@@ -1,7 +1,31 @@
-<?php 
-	include 'core/init.php';
-	$user = $userObj->get('users', array('user_id' => 1));
-	echo $user->username;
+<?php
+ include 'core/init.php';
+  if(isset($_POST['login'])){
+ 	$email    = Validate::escape($_POST['email']);
+ 	$password = Validate::escape($_POST['password']);
+
+ 	if(empty($email) or empty($password)){
+ 		$error = "Enter your email and password to login!";
+ 	}else {
+ 		if(!Validate::filterEmail($email)){
+ 			$error = "Invaild email";
+ 		}else{
+ 			if($user = $userObj->emailExist($email)){
+				 $hash = $user->password;
+ 				if(password_verify($password, $hash)){
+ 					//login
+ 					$_SESSION['user_id'] = $user->user_id;
+ 					$userObj->redirect('home.php');
+ 				}else{
+ 					$error = "Email or Password is incorrect!";
+ 				}
+  			}else{
+ 				$error = "No account with that email exists";
+ 			}
+ 		}
+ 	}
+ }
+ 
 ?>
 
 <!DOCTYPE html>
@@ -30,8 +54,10 @@
 				<input type="password" name="password" placeholder="Password">
 				<button type="submit" name="login">Login</button>
 				</div>
-				<div class="error shake-horizontal">Errors shows here</div>
 			</form>
+			<?php if(isset($error)):?>
+				<div class="error shake-horizontal"><?php echo $error;?></div>
+			<?php endif;?>
 			</div>
 		</div>
 		<div class="r-pass">
