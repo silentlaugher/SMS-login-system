@@ -1,6 +1,6 @@
 <?php 
 	include 'core/init.php';
-	Database::instance();
+	Database::instance()->prepare('select * from users')->execute();
 ?>
 
 <!DOCTYPE html>
@@ -17,8 +17,8 @@
 	<div class="wrapper">
 	<div class="wrapper-inner">
 		<div class="header-wrapper">
-			<h1>Wellcome</h1>
-			<h3>This is an simple Login and Registration system with Email & Mobile verification</h3>			
+			<h1>Welcome</h1>
+			<h3>This is an simple Login and Registration system with Email & SMS Mobile verification</h3>			
 		</div><!--HEADER WRAPPER ENDS-->
 		<div class="sign-div">
 		<div class="sign-in">
