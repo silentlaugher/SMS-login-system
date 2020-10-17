@@ -6,6 +6,8 @@
 		require_once "classes/{$class}.php";
 	});
 
+	$userObj = new Users;
+
   	//session
 	session_start();
  ?>

@@ -1,6 +1,7 @@
 <?php 
 	include 'core/init.php';
-	Database::instance()->prepare('select * from users')->execute();
+	$user = $userObj->get('users', array('user_id' => 1));
+	echo $user->username;
 ?>
 
 <!DOCTYPE html>
