@@ -1,7 +1,9 @@
 <?php 
 	include 'core/init.php';
-	$user = $userObj->get('users', array('user_id' => 1));
-	echo $user->username;
+	if(isset($_POST['login'])){
+		$email = Validate::escape($_POST['email']);
+		$password = Validate::escape($_POST['password']);
+	}
 ?>
 
 <!DOCTYPE html>
