@@ -32,6 +32,10 @@
         
         public function redirect($location){
 			header("Location: ".BASE_URL.$location);
+        }
+        
+        public function userData($user_id = int){
+			return $this->get('users', array('user_id' => $user_id));
 		}
     }
 ?>
