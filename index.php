@@ -3,6 +3,16 @@
 	if(isset($_POST['login'])){
 		$email = Validate::escape($_POST['email']);
 		$password = Validate::escape($_POST['password']);
+		
+		if(empty($email) or empty($password)){
+			$error = "Enter your email and password to login!";
+		}else {
+			if(!Validate::filterEmail($email)){
+				$error = "Invaild email";
+			}else{
+				
+			}
+		}
 	}
 ?>
 
@@ -32,8 +42,10 @@
 				<input type="password" name="password" placeholder="Password">
 				<button type="submit" name="login">Login</button>
 				</div>
-				<div class="error shake-horizontal">Errors shows here</div>
 			</form>
+			<?php if(isset($error)):?>
+				<div class="error shake-horizontal"><?php echo $error;?></div>
+			<?php endif;?>
 			</div>
 		</div>
 		<div class="r-pass">
