@@ -36,6 +36,16 @@
         
         public function userData($user_id = int){
 			return $this->get('users', array('user_id' => $user_id));
+        }
+        
+        public function logout(){
+			$_SESSION = array();
+			session_destroy();
+			$this->redirect('index.php');
+        }
+        
+        public function isLoggedIn(){
+			return ((isset($_SESSION['user_id']))) ? true : false;
 		}
     }
 ?>
