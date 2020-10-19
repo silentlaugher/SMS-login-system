@@ -32,7 +32,7 @@
 	   		}else if (Validate::length($lastName, 2, 20)){
 				$errors['names'] = "Names can only be between in 2 - 20 characters";
 	   		
-	   		}else if(Validate::length($username, 2, 10)){
+	   		}else if(Validate::length($username, 2, 20)){
 				$errors['username'] = "Username can only be between in 2 - 10 characters";
 	   		
 	   		}else if ($userObj->usernameExist($username)){
@@ -124,6 +124,10 @@
 					<input id="female" type="radio" name="gender" value="female">
 					<label for="female">
 						Female
+					</label>
+                    <input id="idrathernotsay" type="radio" name="gender" value="idrathernotsay">
+                    <label for="idrathernotsay">
+						I'd rather not say
 					</label> 
 				</fieldset>
   
