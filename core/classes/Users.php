@@ -25,6 +25,11 @@
 			$email = $this->get('users', array('email' => $email));
 			return ((!empty($email))) ? $email : false;
         }
+
+        public function usernameExist($username){
+			$username = $this->get('users', array('username' => $username));
+			return ((!empty($username))) ? $username : false;
+		}
         
         public function hash($password){
 			return password_hash($password, PASSWORD_BCRYPT);

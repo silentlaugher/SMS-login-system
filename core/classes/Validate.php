@@ -10,7 +10,14 @@
 
         public function filterEmail($email){
 			return filter_var($email, FILTER_VALIDATE_EMAIL);
+        }
+        
+        public function length($input, $min, $max){
+			if(strlen($input) > $max){
+				return true;
+			}else if(strlen($input) < $min){
+				return true;
+			}
 		}
-
 	}
 ?>
