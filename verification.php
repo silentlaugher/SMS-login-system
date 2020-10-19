@@ -2,6 +2,12 @@
    include 'core/init.php';
    $user_id = $_SESSION['user_id'];
    $user = $userObj->userData($user_id);
+
+   if(isset($_POST['email'])){
+    $link = Verify::generateLink();
+    echo $link;
+}
+
 ?>
 
 <!DOCTYPE html>
