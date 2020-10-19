@@ -12,8 +12,46 @@
 
         if(empty($errors['allFields'])){
             //validate form
-			
-    }
+            $firstName = Validate::escape($_POST['firstName']);
+	 		$lastName = Validate::escape($_POST['lastName']);
+	 		$username = Validate::escape($_POST['username']);
+	 		$email = Validate::escape($_POST['email']);
+	   		$password = $_POST['password'];
+	   		$rePassword = $_POST['passwordAgain'];
+	 		$gender = Validate::escape($_POST['gender']);
+	 		$month = Validate::escape($_POST['month']);
+	 		$day = Validate::escape($_POST['day']);
+	 		$year = Validate::escape($_POST['year']);
+	 		$birthdate = "{$year}-{$month}-{$day}";
+
+
+	   		if(Validate::length($firstName, 2, 20)){
+	   			$errors['names'] = "Names can only be between in 2 - 20 characters";
+	   		
+	   		}else if (Validate::length($lastName, 2, 20)){
+				$errors['names'] = "Names can only be between in 2 - 20 characters";
+	   		
+	   		}else if(Validate::length($username, 2, 10)){
+				$errors['username'] = "Username can only be between in 2 - 10 characters";
+	   		
+	   		}else if ($userObj->usernameExist($username)){
+	   			$errors['username'] = "Username is already taken";
+	   		
+	   		}else if(!Validate::filterEmail($email)){
+	   			$errors['email'] = "Invalid email format";
+	   		
+	   		}else if($userObj->emailExist($email)){
+	   			$errors['email'] = "Email already exists";
+	   		
+	   		}else if($password != $rePassword){
+	   			$errors['password'] = "Password does not match";
+	   		
+	   		}else{
+                //create user
+	   			
+	 	   	}
+		}
+	}
 ?>
 
 <!DOCTYPE html>
