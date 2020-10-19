@@ -2,7 +2,7 @@
   include 'core/init.php';
   $user_id = $_SESSION['user_id'];
   $user = $userObj->userData($user_id);
-  $verifyObj->authOnly();
+  
 
     if(isset($_POST['update'])){
         $required = array('firstName','lastName','username','email','password');
@@ -18,39 +18,39 @@
             $lastName = Validate::escape($_POST['lastName']);
             $username = Validate::escape($_POST['username']);
             $email = Validate::escape($_POST['email']);
-              $password = $_POST['password'];
-   
-              if(Validate::length($firstName, 2, 20)){
-                  $errors['names'] = "Names can only be between in 2 - 20 characters";
-              
-              }else if (Validate::length($lastName, 2, 20)){
-               $errors['names'] = "Names can only be between in 2 - 20 characters";
-              }else
-   
-              if(Validate::length($username, 2, 10)){
-               $errors['username'] = "Username can only be between in 2 - 10 characters";
-              
-              }else if ($username != $user->username && $userObj->usernameExist($username)){
-                  $errors['username'] = "Username is already taken";
-              }else
-   
-              if(!Validate::filterEmail($email)){
-                  $errors['email'] = "Invalid email format";
-              
-              }else if($email != $user->email && $userObj->emailExist($email)){
-                  $errors['email'] = "Email already exists";
-              
-              }else{
-                  if(password_verify($password, $user->password)){
-                      //update user
-                        $userObj->update('users', array('firstName' => $firstName, 'lastName' => $lastName, 'username' => $username, 'email' => $email), array('user_id' => $user_id));
-                        $userObj->redirect('account/settings');
-                  }else{
-                      $errors['password'] = "Password is incorrect";
-                  }
-              }
-          }	
-     }
+			$password = $_POST['password'];
+
+			if(Validate::length($firstName, 2, 20)){
+				$errors['names'] = "Names can only be between in 2 - 20 characters";
+			
+			}else if (Validate::length($lastName, 2, 20)){
+			$errors['names'] = "Names can only be between in 2 - 20 characters";
+			}else
+
+			if(Validate::length($username, 2, 10)){
+			$errors['username'] = "Username can only be between in 2 - 10 characters";
+			
+			}else if ($username != $user->username && $userObj->usernameExist($username)){
+				$errors['username'] = "Username is already taken";
+			}else
+
+			if(!Validate::filterEmail($email)){
+				$errors['email'] = "Invalid email format";
+			
+			}else if($email != $user->email && $userObj->emailExist($email)){
+				$errors['email'] = "Email already exists";
+			
+			}else{
+				if(password_verify($password, $user->password)){
+					//update user
+					$userObj->update('users', array('firstName' => $firstName, 'lastName' => $lastName, 'username' => $username, 'email' => $email), array('user_id' => $user_id));
+					$userObj->redirect('account/settings');
+				}else{
+					$errors['password'] = "Password is incorrect";
+				}
+			}
+		}	
+	}
 ?>
 
 <!DOCTYPE html>

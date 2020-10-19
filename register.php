@@ -1,5 +1,6 @@
 <?php 
     include 'core/init.php';
+    
 
     if(isset($_POST['signup'])){
 		$required = array('firstName', 'lastName','username','email','password','passwordAgain', 'gender', 'month','day','year');
@@ -48,7 +49,10 @@
 	   		
 	   		}else{
                 //create user
-	   			
+                $hash = $userObj->hash($password);
+                $user_id = $userObj->insert('users', array('firstName' => $firstName, 'lastName' => $lastName, 'username' => $username, 'email' => $email, 'password' => $hash, 'gender' => $gender, 'birthday' => $birthdate));
+                $_SESSION['user_id'] = $user_id;
+                $userObj->redirect('verification');
 	 	   	}
 		}
 	}
