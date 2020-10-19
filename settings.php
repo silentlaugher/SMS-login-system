@@ -1,7 +1,8 @@
-<?php 
-    include 'core/init.php';
-    $user_id = $_SESSION['user_id'];
-    $user = $userObj->userData($user_id);
+<?php  
+  include 'core/init.php';
+  $user_id = $_SESSION['user_id'];
+  $user = $userObj->userData($user_id);
+  $verifyObj->authOnly();
 
     if(isset($_POST['update'])){
         $required = array('firstName','lastName','username','email','password');
@@ -13,11 +14,11 @@
         }
 
         if(empty($errors['allFields'])){
-            $firstName     = Validate::escape($_POST['firstName']);
-            $lastName      = Validate::escape($_POST['lastName']);
-            $username      = Validate::escape($_POST['username']);
-            $email         = Validate::escape($_POST['email']);
-              $password      = $_POST['password'];
+            $firstName = Validate::escape($_POST['firstName']);
+            $lastName = Validate::escape($_POST['lastName']);
+            $username = Validate::escape($_POST['username']);
+            $email = Validate::escape($_POST['email']);
+              $password = $_POST['password'];
    
               if(Validate::length($firstName, 2, 20)){
                   $errors['names'] = "Names can only be between in 2 - 20 characters";
@@ -42,7 +43,8 @@
               }else{
                   if(password_verify($password, $user->password)){
                       //update user
-
+                        $userObj->update('users', array('firstName' => $firstName, 'lastName' => $lastName, 'username' => $username, 'email' => $email), array('user_id' => $user_id));
+                        $userObj->redirect('account/settings');
                   }else{
                       $errors['password'] = "Password is incorrect";
                   }
