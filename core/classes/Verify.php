@@ -11,6 +11,10 @@
 		public function generateLink(){
 			return str_shuffle(substr(md5(time().mt_rand().time()), 0, 25));
         }
+
+        public static function generateCode(){
+			return mb_strtoupper(substr(md5(mt_rand().time()), 0, 7));
+		}
         
         public function verifyCode($code){
 			return $this->user->get('verification', array('code' => $code));

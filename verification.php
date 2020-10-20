@@ -31,7 +31,12 @@ if(isset($_POST['phone'])){
     $number  = Validate::escape($_POST['number']);
     if(!empty($number)){
         if(preg_match("/^([0-9]+)$/", $number)){
+            $number = urlencode($number);
+            $code = $verifyObj->generateCode();
+            echo $code;
+            $message = "$user->firstName, your account has been created, here's your verification code: {$code}";
             
+   
             }else{
                 $errors['phone'] = "Something went wrong, try the other method";
             }
@@ -41,7 +46,7 @@ if(isset($_POST['phone'])){
     }else{
         $errors['phone'] = "Enter your mobile number to get a verification code";
     }
-}
+
 ?> 
 
 <!DOCTYPE html>
