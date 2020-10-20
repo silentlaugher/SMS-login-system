@@ -2,7 +2,7 @@
   include 'core/init.php';
   $user_id = $_SESSION['user_id'];
   $user = $userObj->userData($user_id);
-  
+  $verifyObj->authOnly();
 
     if(isset($_POST['update'])){
         $required = array('firstName','lastName','username','email','password');
