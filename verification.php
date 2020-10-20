@@ -1,35 +1,58 @@
 <?php 
-   include 'core/init.php';
-   $user_id = $_SESSION['user_id'];
-   $user = $userObj->userData($user_id);
-   $verifyObj->authOnly();
-
-   if(isset($_POST['email'])){
-        $link = Verify::generateLink();
-        $message = "{$user->firstName}, Your account has been created. Please vist this link to verify your account allowing you site access : <a href='http://localhost/SMSlogin/verification/{$link}'>Verify Link</a>";
-        $verifyObj->sendToMail($user->email, $message);
-        $userObj->insert('verification', array('user_id' => $user_id, 'code' => $link));
-        $userObj->redirect('verification?mail=sent');
-   }
-
-   if(isset($_GET['verify'])){
-    $code = Validate::escape($_GET['verify']);
-    $verify = $verifyObj->verifyCode($code);
-
-    if($verify){
-        if(date('Y-m-d', strtotime($verify->createdAt)) < date('Y-m-d')){
-            $errors['verify'] = "Your verification link has expired";
-        }else{
-            $userObj->update('verification',array('status' => '1'), array('user_id' => $user_id,'code' => $code));
-            $userObj->redirect('home.php');
-        }
-    }else{
-        $errors['verify'] = "Invalid verification link";
+	include 'core/init.php';
+ 	$user_id = $_SESSION['user_id'];
+	$user    = $userObj->userData($user_id);
+	$verifyObj->authOnly();
+ 
+	if(isset($_POST['email'])){
+		$link = Verify::generateLink();
+    	$message = "{$user->firstName}, Your account has been created, Vist this link to verify your account : <a href='http://localhost/login-system/verification/{$link}'>Verify Link</a>";
+    	$subject = "Account Verification";
+    	$verifyObj->sendToMail($user->email, $message, $subject);
+    	$userObj->insert('verification', array('user_id' => $user_id, 'code' => $link));
+    	$userObj->redirect('verification?mail=sent');
     }
-}
 
+    if(isset($_GET['verify'])){
+    	$code = Validate::escape($_GET['verify']);
+    	$verify = $verifyObj->verifyCode($code);
 
-?>
+    	if($verify){
+    		if(date('Y-m-d', strtotime($verify->createdAt)) < date('Y-m-d')){
+    			$errors['verify'] = "Your verification link has been expired";
+    		}else{
+    			$userObj->update('verification',array('status' => '1'), array('user_id' => $user_id,'code' => $code));
+    			$userObj->redirect('home.php');
+    		}
+    	}else{
+    		$errors['verify'] = "Invalid verification link";
+    	}
+    }
+
+    if(isset($_POST['phone'])){
+    	$number  = Validate::escape($_POST['number']);
+    	if(!empty($number)){
+    		if(preg_match("/^([0-9]+)$/", $number)){
+    			$number = urlencode($number);
+    			$code = $verifyObj->generateCode();
+    			$message = "$user->firstName, your account has been created, here's your verification code: {$code}";
+    			$result = $verifyObj->sendToPhone($number, $message);
+    			$userObj->insert('verification', array('user_id' => $user_id, 'code' => $code));
+
+    			if($result){
+    				$userObj->update('users', array('phone' => $number), array('user_id' => $user_id));
+    				$userObj->redirect('verification/phone');
+    			}else{
+    				$errors['phone'] = "Something went wrong, please try the other method";
+    			}
+    		}else{
+    			$errors['phone'] = "Only valid numbers are allowed";
+    		}
+    	}else{
+    		$errors['phone'] = "Enter your mobile number to get a verification code";
+    	}
+    }
+?> 
 
 <!DOCTYPE html>
 <html lang="en">
