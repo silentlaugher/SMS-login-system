@@ -7,6 +7,8 @@
         $link = Verify::generateLink();
         $message = "{$user->firstName}, Your account has been created. Please vist this link to verify your account allowing you site access : <a href='http://localhost/SMSlogin/verification/{$link}'>Verify Link</a>";
         $verifyObj->sendToMail($user->email, $message);
+        $userObj->insert('verification', array('user_id' => $user_id, 'code' => $link));
+        $userObj->redirect('verification?mail=sent');
    }
 
 ?>
@@ -38,7 +40,7 @@
 				<fieldset>
 				<legend>Method 1</legend>
 				<?php if(isset($_GET['mail'])):?>
-					<h4>An verification email has been sent to your email, check your email to verify your account</h4>
+					<h4>A verification email has been sent to your email, please check your email to verify your account</h4>
 				<?php else:?>
 					<h3>Email verificaiton</h3>
 					<form method="post">
