@@ -1,7 +1,8 @@
 <?php
     include 'core/init.php';
     $user_id = $_SESSION['user_id'];
-    $user = $userObj->userData($user_id);
+	$user = $userObj->userData($user_id);
+	$verifyObj->authOnly();
 ?>
 
 <!DOCTYPE html>

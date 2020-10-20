@@ -1,2 +1,5 @@
 RewriteEngine On
 RewriteRule ^account/settings/?$ settings.php
+RewriteRule ^register/?$ register.php
+RewriteRule ^verification/?$ verification.php
+RewriteRule ^verification/([a-zA-Z0-9]+)/?$ verification.php?verify=$1
