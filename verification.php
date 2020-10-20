@@ -11,6 +11,23 @@
         $userObj->redirect('verification?mail=sent');
    }
 
+   if(isset($_GET['verify'])){
+    $code = Validate::escape($_GET['verify']);
+    $verify = $verifyObj->verifyCode($code);
+
+    if($verify){
+        if(date('Y-m-d', strtotime($verify->createdAt)) < date('Y-m-d')){
+            $errors['verify'] = "Your verification link has expired";
+        }else{
+            $userObj->update('verification',array('status' => '1'), array('user_id' => $user_id,'code' => $code));
+            $userObj->redirect('home.php');
+        }
+    }else{
+        $errors['verify'] = "Invalid verification link";
+    }
+}
+
+
 ?>
 
 <!DOCTYPE html>

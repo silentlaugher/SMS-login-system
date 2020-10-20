@@ -1,5 +1,8 @@
 <?php
  include 'core/init.php';
+  if($userObj->isLoggedIn()){
+ 	$userObj->redirect('home.php');
+ }
   if(isset($_POST['login'])){
  	$email    = Validate::escape($_POST['email']);
  	$password = Validate::escape($_POST['password']);
@@ -11,7 +14,7 @@
  			$error = "Invaild email";
  		}else{
  			if($user = $userObj->emailExist($email)){
-				 $hash = $user->password;
+ 				$hash = $user->password;
  				if(password_verify($password, $hash)){
  					//login
  					$_SESSION['user_id'] = $user->user_id;
@@ -66,7 +69,7 @@
 		</div><!--CONTENT WRAPPER ENDS-->
 		<div class="footer-wrapper">
 			<div class="inner-footer-wrap">
-			<div class="sign-up"><button class="sign-up-btn" onclick="location.href='account/settings';" type="submit">Sign Up</button></div>
+			<div class="sign-up"><button class="sign-up-btn" onclick="location.href='register/';" type="submit">Sign Up</button></div>
 			</div>
 		</div><!--FOOTER WRAPPER ENDS-->
 	</div>

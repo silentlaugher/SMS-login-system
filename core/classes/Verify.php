@@ -1,13 +1,19 @@
 <?php 
 	class Verify{
 		protected $db;
+        protected $user;
 
         public function __construct() {            
-         	$this->db =  Database::instance();
+            $this->db =  Database::instance();
+            $this->user = new Users;
    		}
 
 		public function generateLink(){
 			return str_shuffle(substr(md5(time().mt_rand().time()), 0, 25));
+        }
+        
+        public function verifyCode($code){
+			return $this->user->get('verification', array('code' => $code));
 		}
 
         public function sendToMail($email, $message){
