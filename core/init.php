@@ -9,7 +9,7 @@
 	});
 
 	$userObj = new Users;
-
+	$verifyObj = new Verify;
   	//session
 	session_start();
  ?>

@@ -7,8 +7,8 @@
 
 	//SMTP
 	define("M_HOST", 'smtp.gmail.com');
-	define("M_USERNAME", 'YourEmailHere@gmail.com');
-	define("M_PASSWORD", 'YourEmailPassword');
+	define("M_USERNAME", 'YourEmailGoesHere');
+	define("M_PASSWORD", 'YourEmailPasswordGoesHere');
 	define("M_SMTPSECURE", 'ssl');
 	define("M_PORT", "465");
 	

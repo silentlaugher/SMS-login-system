@@ -4,9 +4,10 @@
    $user = $userObj->userData($user_id);
 
    if(isset($_POST['email'])){
-    $link = Verify::generateLink();
-    echo $link;
-}
+        $link = Verify::generateLink();
+        $message = "{$user->firstName}, Your account has been created. Please vist this link to verify your account allowing you site access : <a href='http://localhost/SMSlogin/verification/{$link}'>Verify Link</a>";
+        $verifyObj->sendToMail($user->email, $message);
+   }
 
 ?>
 
@@ -33,7 +34,7 @@
 						}
 					}else{
 				?>
-				<h4>Your account has been created, you need to activate your account by following methods:</h4>
+				<h4>Your account has been created, you need to activate your account by one of the following methods:</h4>
 				<fieldset>
 				<legend>Method 1</legend>
 				<?php if(isset($_GET['mail'])):?>
