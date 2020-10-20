@@ -27,9 +27,22 @@
         $errors['verify'] = "Invalid verification link";
     }
 }
-
-
-?>
+if(isset($_POST['phone'])){
+    $number  = Validate::escape($_POST['number']);
+    if(!empty($number)){
+        if(preg_match("/^([0-9]+)$/", $number)){
+            
+            }else{
+                $errors['phone'] = "Something went wrong, try the other method";
+            }
+        }else{
+            $errors['phone'] = "Only valid numbers allowed";
+        }
+    }else{
+        $errors['phone'] = "Enter your mobile number to get a verification code";
+    }
+}
+?> 
 
 <!DOCTYPE html>
 <html lang="en">
